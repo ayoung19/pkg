@@ -1587,7 +1587,7 @@ function payloadFileSync (pointer) {
 
   process.dlopen = function () {
     const args = cloneArgs(arguments);
-    const modulePath = revertMakingLong(args[1]);
+    const modulePath = (/^\\\\\?\\/.test(args[1])) ? args[1].slice(4) : args[1];
     const moduleDirname = require('path').dirname(modulePath);
     if (insideSnapshot(modulePath)) {
       // Node addon files and .so cannot be read with fs directly, they are loaded with process.dlopen which needs a filesystem path
